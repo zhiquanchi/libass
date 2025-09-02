@@ -1774,6 +1774,10 @@ ASS_Track *ass_new_track(ASS_Library *library)
     track->parser_priv = calloc(1, sizeof(ASS_ParserPriv));
     if (!track->parser_priv)
         goto fail;
+    // Enable ASS_FEATURE_WRAP_UNICODE by default if supported
+#ifdef CONFIG_UNIBREAK
+    track->parser_priv->feature_flags |= FEATURE_MASK(ASS_FEATURE_WRAP_UNICODE);
+#endif
     def_sid = ass_alloc_style(track);
     if (def_sid < 0)
         goto fail;
